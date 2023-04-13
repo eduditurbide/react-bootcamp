@@ -42,7 +42,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:0e2c8c7d0a693ef9e89d42fba3ce59e391a76ea6a8e3cff10f84be041cefea6b7314d8df1322ea83f19e6f50819e14036c7ad89c3190a450f2ae70bbbbf46aca#npm:18.2.0"],\
-            ["vite", "virtual:0e2c8c7d0a693ef9e89d42fba3ce59e391a76ea6a8e3cff10f84be041cefea6b7314d8df1322ea83f19e6f50819e14036c7ad89c3190a450f2ae70bbbbf46aca#npm:4.2.1"]\
+            ["vite", "virtual:0e2c8c7d0a693ef9e89d42fba3ce59e391a76ea6a8e3cff10f84be041cefea6b7314d8df1322ea83f19e6f50819e14036c7ad89c3190a450f2ae70bbbbf46aca#npm:4.2.1"],\
+            ["whatwg-fetch", "npm:3.6.2"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -4282,7 +4283,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:0e2c8c7d0a693ef9e89d42fba3ce59e391a76ea6a8e3cff10f84be041cefea6b7314d8df1322ea83f19e6f50819e14036c7ad89c3190a450f2ae70bbbbf46aca#npm:18.2.0"],\
-            ["vite", "virtual:0e2c8c7d0a693ef9e89d42fba3ce59e391a76ea6a8e3cff10f84be041cefea6b7314d8df1322ea83f19e6f50819e14036c7ad89c3190a450f2ae70bbbbf46aca#npm:4.2.1"]\
+            ["vite", "virtual:0e2c8c7d0a693ef9e89d42fba3ce59e391a76ea6a8e3cff10f84be041cefea6b7314d8df1322ea83f19e6f50819e14036c7ad89c3190a450f2ae70bbbbf46aca#npm:4.2.1"],\
+            ["whatwg-fetch", "npm:3.6.2"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -7877,6 +7879,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["whatwg-encoding", "npm:2.0.0"],\
             ["iconv-lite", "npm:0.6.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["whatwg-fetch", [\
+        ["npm:3.6.2", {\
+          "packageLocation": "./.yarn/cache/whatwg-fetch-npm-3.6.2-4bdf324792-ee976b7249.zip/node_modules/whatwg-fetch/",\
+          "packageDependencies": [\
+            ["whatwg-fetch", "npm:3.6.2"]\
           ],\
           "linkType": "HARD"\
         }]\

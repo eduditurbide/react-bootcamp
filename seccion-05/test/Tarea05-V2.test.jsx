@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { render} from '@testing-library/react'
 import { Tarea05 } from "../src/Tarea05"
 
 describe('Prueba <Tarea05 />', () => {
@@ -25,6 +25,7 @@ describe('Prueba <Tarea05 />', () => {
 
     render( <Tarea05 title={ title } /> )
     expect( screen.getByRole('heading', { level: 1}).innerHTML ).toContain(title)
+    
     // screen.debug()
 
   })
