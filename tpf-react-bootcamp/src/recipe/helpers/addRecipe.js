@@ -1,6 +1,6 @@
 
 export const getRecipes = async ({ token }) => {
-  const recipesUrl = import.meta.env.VITE_APP_RECIPE_URL_API + `recipes/get?auth=${token}`
+  const recipesUrl = import.meta.env.VITE_APP_RECIPE_URL_API + `recipes/add?auth=${token}`
 
   const resp = await fetch(recipesUrl, {
     method: 'GET',

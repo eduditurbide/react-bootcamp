@@ -17,6 +17,11 @@ export const useLogin = ( initialLogin = {} ) => {
     
     const {data, hasError} = await getFetchLogin({ email, password })
     
+    setState({
+      ...state,
+      isLoading: false,
+    })
+
     if (hasError) {
       if (data?.error) {
         setErrorMessages("Usuario o contraseña inválidos.")
@@ -32,13 +37,12 @@ export const useLogin = ( initialLogin = {} ) => {
       setErrorMessages("Error en servicio.")
       return
     }
-
-    login(data)
+    
+    login(data || null)
 
     setState({
       ...state,
       data: data,
-      isLoading: false,
       hasError: false,
       errorMessages: null,
     })

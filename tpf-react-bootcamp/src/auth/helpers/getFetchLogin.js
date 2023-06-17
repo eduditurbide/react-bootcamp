@@ -1,19 +1,20 @@
 
-export const getFetchLogin = async ({ email = "", password = ""}) => {
+export const getFetchLogin = async ({ email = "", password = "" }) => {
+  const loginUrl = import.meta.env.VITE_APP_RECIPE_URL_API + 'auth/login'
 
-    const resp = await fetch(
-      'https://backend-recipes-bootcamps-tribe-production.up.railway.app/api/auth/login',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({email, password})
-      }
-    )
-    
-    const dataResponse = await resp.json()
+  const resp = await fetch(loginUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  })
+    .catch(err => {
+      console.log(err);
+    })
 
-    return {
-      data: dataResponse, 
-      hasError: resp.status === 400
-    }
+  const dataResponse = await resp.json()
+
+  return {
+    data: dataResponse,
+    hasError: !dataResponse || !!dataResponse?.error || !!dataResponse?.errors
   }
+}

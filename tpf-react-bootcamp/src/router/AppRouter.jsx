@@ -3,6 +3,7 @@ import { PublicRoutes } from "./PublicRoutes"
 import { AuthRoutes } from "../auth/routes"
 import { RecipeRoutes } from "../recipe/routes"
 import { PrivateRoutes } from "./PrivateRoutes"
+import { RecipeProvider } from "../recipe/context/RecipeProvider"
 
 export const AppRouter = () => {
   return (
@@ -16,9 +17,11 @@ export const AppRouter = () => {
 
       {/* RecipesApp */}
       <Route path="/*" element={
-        <PrivateRoutes>
-          <RecipeRoutes />
-        </PrivateRoutes>
+        <RecipeProvider>
+          <PrivateRoutes>
+            <RecipeRoutes />
+          </PrivateRoutes>
+        </RecipeProvider>
       } />
 
     </Routes>

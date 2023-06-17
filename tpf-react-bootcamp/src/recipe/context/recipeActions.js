@@ -3,4 +3,5 @@ export const type = {
   list: '[Recipe] List',
   mark: '[Recipe] Mark',
   remove: '[Recipe] Remove',
+  selected: '[Recipe] Selected',
 }

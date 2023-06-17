@@ -1,14 +1,15 @@
 import { Logout, Settings } from "@mui/icons-material";
 import { AppBar, Avatar, Divider, Grid, IconButton, ListItem, ListItemIcon, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material"
 import { useContext, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../auth/context";
 
 export const Navbar = () => {
 
-  const { logout } = useContext(AuthContext)
+  const { logout } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -21,7 +22,8 @@ export const Navbar = () => {
   const onLogout = () => {
     handleClose()
     logout()
-    Navigate('/auth/login', {
+
+    navigate('/auth/login', {
       replace: true
     })
   }

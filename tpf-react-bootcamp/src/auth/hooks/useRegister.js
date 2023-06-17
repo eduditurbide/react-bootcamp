@@ -17,6 +17,11 @@ export const useRegister = ( initialRegister = {} ) => {
     
     const {data, hasError} = await getFetchRegister({ email, password })
     
+    setState({
+      ...state,
+      isLoading: false,
+    })
+
     if (hasError) {
       if (data?.error) {
         setErrorMessages("Usuario o contraseña inválidos.")
@@ -33,12 +38,11 @@ export const useRegister = ( initialRegister = {} ) => {
       return
     }
 
-    login(data)
+    login(data || null)
 
     setState({
       ...state,
       data: data,
-      isLoading: false,
       hasError: false,
       errorMessages: null,
     })
