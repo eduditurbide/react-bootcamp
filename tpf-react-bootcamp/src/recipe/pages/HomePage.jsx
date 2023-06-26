@@ -3,12 +3,11 @@ import { EmptyView, RecipeView } from "../views"
 import { Add } from "@mui/icons-material"
 import { Link } from "react-router-dom"
 import { RecipeList } from "../components"
-import { useContext } from "react"
-import { RecipeContext } from "../context/RecipeContext"
+import { useRecipes } from "../hooks"
 
 export const HomePage = () => {
 
-  const { selected } = useContext(RecipeContext)
+  const { selected, isRecipeSelectedOwner } = useRecipes()
 
   return (
     <>
@@ -18,7 +17,7 @@ export const HomePage = () => {
         </Grid>
 
         <Grid item xs={12} sm={8}>
-          {selected && (<RecipeView {...selected}/>)}
+          {selected && (<RecipeView {...selected} isOwner={isRecipeSelectedOwner}/>)}
           {!selected && (<EmptyView />)}
         </Grid>
       </Grid>

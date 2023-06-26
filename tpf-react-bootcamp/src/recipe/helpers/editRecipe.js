@@ -1,9 +1,8 @@
-
-export const addRecipe = async ({ recipe, token }) => {
-  const recipesUrl = import.meta.env.VITE_APP_RECIPE_URL_API + `recipes/add?auth=${token}`
+export const editRecipe = async ({ recipe, token }) => {
+  const recipesUrl = import.meta.env.VITE_APP_RECIPE_URL_API + `recipes/edit/${recipe?._id}?auth=${token}`
 
   const resp = await fetch(recipesUrl, {
-    method: 'POST',
+    method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(recipe)
   })

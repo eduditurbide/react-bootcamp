@@ -1,8 +1,8 @@
-import { Box, Button, Divider, Grid, IconButton, List, ListItem, ListItemText, Paper, TextField, Typography } from "@mui/material"
+import { Button, Grid, TextField } from "@mui/material"
 import { useForm } from "../../hooks"
-import { AddOutlined, Delete, SaveOutlined } from "@mui/icons-material"
-import { useState } from "react"
-import { IngredientInput } from "./IngredientInput"
+import { SaveOutlined } from "@mui/icons-material"
+import { IngredientForm } from "./ingredient"
+import { DeleteButton } from "./DeleteButton"
 
 const initRecipeForm = {
   name: "",
@@ -11,39 +11,31 @@ const initRecipeForm = {
   imagePath: "",
 }
 
-export const RecipeForm = ({recipe = null}) => {
+export const RecipeForm = ({recipe = null, onSubmit = null, onDelete = null}) => {
 
   const { 
+    formState,
     name, 
     description, 
     ingredients, 
     imagePath, 
     onInputChange,
-    onInputListChange,
-    onAddElementToList,
-    onDeleteElementToList,
   } = useForm(recipe || initRecipeForm) 
 
-  const [ingredientToAdd, setIngredientToAdd] = useState("")
-
-  const onAddIngredient = () => { 
-    if (!ingredientToAdd || ingredientToAdd.trim() === '') return
-    onAddElementToList({ name: 'ingredients', value: { name: ingredientToAdd } })
-  }
-
-  const onDeleteIngredient = (ingredient) => { 
-    onDeleteElementToList(ingredient)
+  const onSaveRecipe = () => {
+    if (onSubmit) {
+      onSubmit(formState)
+    }
   }
 
   return (
     <>
-    
-      <Grid container>
+      <Grid container gap={3}>
         <TextField
           type="text"
           variant="filled"
           fullWidth
-          sx={{ border: 'none', mb: 3 }}
+          sx={{ border: 'none' }}
           placeholder="Ingrese un título"
           label="Título"
           name="name"
@@ -55,7 +47,7 @@ export const RecipeForm = ({recipe = null}) => {
           type="url"
           variant="filled"
           fullWidth
-          sx={{ border: 'none', mb: 3 }}
+          sx={{ border: 'none' }}
           placeholder="Ingrese el link de una imagen"
           label="Imagen"
           name="imagePath"
@@ -63,11 +55,13 @@ export const RecipeForm = ({recipe = null}) => {
           onChange={onInputChange}
         />
 
+        {imagePath && ( <img alt="Imagen de receta." src={imagePath} style={{ height: '200px', width: 'auto', mb: 3 }}/> )}
+
         <TextField
           type="text"
           variant="filled"
           fullWidth
-          sx={{ border: 'none', mb: 3 }}
+          sx={{ border: 'none' }}
           multiline
           placeholder="Describe el tipo de comida y los pasos a seguir para preparala ;)"
           label="Descripción"
@@ -76,92 +70,31 @@ export const RecipeForm = ({recipe = null}) => {
           onChange={onInputChange}
         />
 
-      </Grid>
-
-      <Typography variant="h5" gutterBottom>Ingredientes</Typography>
-      <Grid container 
-        display="flex"
-        flexDirection="row"
-        flexWrap="nowrap"
-        justifyContent={"space-between"} 
-      >
-        <Grid item sx={{ width: "100%"}}>
-          <TextField
-            type="text"
-            variant="filled"
-            fullWidth
-            sx={{ border: 'none', mb: 3 }}
-            placeholder="Ingrese un ingrediente"
-            label="Agregar un ingrediente"
-            name="ingredientToAdd"
-            value={ingredientToAdd}
-            onChange={({target}) => setIngredientToAdd(target.value)}
-          />
-        </Grid>
-
-        <Grid item>
-          <IconButton color="primary" sx={{ p: 2, ml: 2 }} aria-label="Agregar ingrediente." onClick={onAddIngredient}>
-            <AddOutlined />
-          </IconButton>
-        </Grid>
-      </Grid>
-
-
+        <IngredientForm name="ingredients" ingredientList={ingredients} onIngredientsChange={onInputChange}/>
       
-      <Paper variant="outlined" sx={{ width: '100%' }}>
-        <Grid container>
-          <List sx={{ width: '100%'}}>
-            {ingredients && (ingredients.map( (ingredient, index) => (
-              <>
-                {index > 0 && (<Divider />)}
-                <ListItem key={`${index}-${ingredient.name}`}
-                  secondaryAction={
-                    <IconButton 
-                      edge="end" 
-                      aria-label="Eliminar ingrediente."
-                      onClick={e => onDeleteIngredient({ name: 'ingredients', index: index })}
-                    >
-                      <Delete color="error" />
-                    </IconButton>
-                  }
-                >
-                  <ListItemText primary={ingredient.name} />
-                </ListItem>  
-                
-              </>
-            )))} 
-          </List>
-        </Grid>
-      </Paper>
-      
+        <Grid item xs={12}>
+          <Grid container alignItems={"center"} justifyContent={"center"} gap={2}>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              sx={{ padding: 1, width: { xs: '100%', sm: 'auto' } }} 
+              onClick={onSaveRecipe}
+            >
+              <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
+              Guardar
+            </Button>
 
-      <Button color="primary" sx={{ padding: 2 }}>
-        <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
-        Guardar
-      </Button>
+            {recipe?._id && (
+              <DeleteButton
+                title="Eliminar receta"
+                text={`Estas por eliminar la receta "${recipe.name}", ¿Deseas continuar?`}
+                onAgreeClickEvent={e => onDelete ? onDelete(formState) : null}
+              />
+            )}
+          </Grid>
+        </Grid>
+
+      </Grid>
     </>
   )
 }
-
-
-// <Grid key={`${index}-${ingredient.name}`} container direction={"row"} justifyContent={"space-between"} alignItems={"center"} sx={{ mb: 1 }}>
-//   <Grid item>
-//     <TextField
-//       type="text"
-//       variant="filled"
-//       fullWidth
-//       sx={{ border: 'none', mb: 3 }}
-//       placeholder="Ingrese un ingrediente"
-//       name="ingredients"
-//       value={ingredient.name}
-//       onChange={(e) => {
-//         onInputListChange({ index, ...e });
-//       }}
-//     />
-//   </Grid>
-//   <Grid item>
-//     <IconButton aria-label="Borrar." onClick={e => onDeleteIngredient({ name: 'ingredients', index: index })}>
-//       <Delete color="error" />
-//     </IconButton>
-//   </Grid>
-// </Grid>

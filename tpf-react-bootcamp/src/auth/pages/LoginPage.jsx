@@ -10,9 +10,15 @@ export const LoginPage = () => {
   const { email, password, onInputChange } = useForm({email: "", password: ""})
   const { isLoading, sendCredentials, hasError, errorMessages} = useLogin()
   
-  const onSubmitForm = (event) => {
-    event.preventDefault()
+  const onSubmitForm = (event = null) => {
+    event?.preventDefault()
     sendCredentials({email, password})
+  }
+
+  const onHandleKeyPress = ({ key, keyCode }) => {
+    if (key === 'Enter' || keyCode === 13) {
+      onSubmitForm()
+    }
   }
 
   return (
@@ -47,6 +53,7 @@ export const LoginPage = () => {
               fullWidth
               value={email}
               onChange={onInputChange}
+              onKeyUp={onHandleKeyPress}
             />
           </Grid>
 
@@ -59,6 +66,7 @@ export const LoginPage = () => {
               fullWidth
               value={password}
               onChange={onInputChange}
+              onKeyUp={onHandleKeyPress}
             />
           </Grid>
 

@@ -33,7 +33,7 @@ export const RecipeProvider = ({children}) => {
     <RecipeContext.Provider value={{
       ...recipeState,
       setRecipeList,
-      setRecipeSelected,
+      setRecipeSelected
     }}>
       {children}
     </RecipeContext.Provider>

@@ -1,3 +1,5 @@
+export * from './DeleteButton'
 export * from './Navbar'
 export * from './RecipeForm'
 export * from './RecipeList'
+export * from './RecipeSearcher'

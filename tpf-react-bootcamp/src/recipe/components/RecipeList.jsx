@@ -1,15 +1,20 @@
-import { InsertPhotoOutlined, TurnedInNot } from "@mui/icons-material"
-import { Box, Divider, Grid, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material"
+import { InsertPhotoOutlined, Search, TurnedInNot } from "@mui/icons-material"
+import { Backdrop, Box, CircularProgress, Divider, Grid, IconButton, InputBase, List, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField, Toolbar, Typography } from "@mui/material"
 import { useRecipes } from "../hooks/useRecipes"
 import { useEffect } from "react"
+import { RecipeSearcher } from "./RecipeSearcher"
 
 export const RecipeList = () => {
 
-  const { recipeList, selected, onSelectRecipe, getRecipesList } = useRecipes()
+  const { recipeList, selected, onSelectRecipe, getRecipesList, isLoading } = useRecipes()
 
   useEffect(() => {
     getRecipesList()
   }, [])
+  
+  const onSearchRecipe = (word) => { 
+    getRecipesList(word)
+  }
 
   return (
     <Box
@@ -22,11 +27,25 @@ export const RecipeList = () => {
         </Typography>
       </Toolbar>
 
-      <Divider />
+      <Divider />  
+      <RecipeSearcher onSearchEvent={e => onSearchRecipe(e)}/>
+      <Divider sx={{ mb: 1 }}/>  
 
       <List>
         {(Array.isArray(recipeList) && recipeList.length > 0) && (recipeList.map((recipe) => (
-          <ListItem key={recipe._id} disablePadding>
+          <ListItem 
+            key={recipe._id} 
+            disablePadding
+            secondaryAction={
+              <IconButton 
+                aria-label="Marcar receta como favorita." 
+                edge="end" 
+                size="large"
+              >
+                <TurnedInNot />
+              </IconButton>
+            }
+          >
             <ListItemButton 
               sx={{ gap: 3 }}
               onClick={e => onSelectRecipe(selected?._id === recipe._id ? false : recipe._id)}
@@ -41,17 +60,18 @@ export const RecipeList = () => {
               <Grid container>
                 <ListItemText primary={recipe.name} />
               </Grid>
-
-              <ListItemIcon>
-                <IconButton aria-label="mark it" size="large">
-                  <TurnedInNot />
-                </IconButton>
-              </ListItemIcon>
             </ListItemButton>
           </ListItem>
         )))
         }
       </List>
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Box>
   )
 }
