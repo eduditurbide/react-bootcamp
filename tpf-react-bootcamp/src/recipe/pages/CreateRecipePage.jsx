@@ -51,7 +51,7 @@ export const CreateRecipePage = () => {
           </Grid>
         )}
 
-        <RecipeForm onSubmit={onSaveRecipe} />
+        <RecipeForm onSubmit={onSaveRecipe} onCancel={e => navigate('/', { replace: true })} />
 
       </Grid>
       <Backdrop

@@ -1,28 +1,26 @@
-import { Logout, Settings } from "@mui/icons-material";
-import { AppBar, Avatar, Divider, Grid, IconButton, ListItem, ListItemIcon, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material"
+import { Menu as MenuIcon, ExitToAppOutlined, ArrowRight } from "@mui/icons-material";
+import { AppBar,  Box, Button, Chip, IconButton, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from "@mui/material"
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../auth/context";
 
 export const Navbar = () => {
 
-  const { logout } = useContext(AuthContext);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  const { user, logout } = useContext(AuthContext);
+  const [anchorElNav, setAnchorElNav] = useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
   };
 
   const onLogout = () => {
-    handleClose()
+    handleCloseNavMenu()
     logout()
-
     navigate('/auth/login', {
       replace: true
     })
@@ -31,79 +29,111 @@ export const Navbar = () => {
   return (
     <AppBar position="fixed">
       <Toolbar>
-        <Grid container direction={'row'} justifyContent={'space-between'} alignItems={"center"}>
-          <Typography variant="h6" noWrap component={'div'}>Recipes App</Typography>
+        {/* <Grid container direction={'row'} justifyContent={'space-between'} alignItems={"center"}> */}
 
-          <Tooltip title="Account settings">
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-            >
-              <Avatar sx={{ width: 32, height: 32 }} />
-            </IconButton>
-          </Tooltip>
+        <Typography
+          variant="h6"
+          noWrap
+          component="a"
+          href="/"
+          sx={{
+            mr: 3,
+            mb: '5px',
+            display: { xs: 'none', md: 'flex' },
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            letterSpacing: '.3rem',
+            color: 'inherit',
+            textDecoration: 'none',
+          }}
+        >
+          Recipes App
+        </Typography>
 
-          <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={open}
-            onClose={handleClose}
-            onClick={handleClose}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                overflow: 'visible',
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                mt: 1.5,
-                '& .MuiAvatar-root': {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                '&:before': {
-                  content: '""',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: 'background.paper',
-                  transform: 'translateY(-50%) rotate(45deg)',
-                  zIndex: 0,
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}> */}
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleOpenNavMenu}
+            color="inherit"
           >
-            <MenuItem component={Link} to="/create" onClick={handleClose}>
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorElNav}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            open={Boolean(anchorElNav)}
+            onClose={handleCloseNavMenu}
+            onClick={handleCloseNavMenu}
+            sx={{
+              display: { xs: 'block', md: 'none' },
+            }}
+          >
+            <MenuItem component={Link} to="/" onClick={handleCloseNavMenu}>
               <ListItemIcon>
-                <Settings fontSize="small" />
+                <ArrowRight fontSize="small" />
               </ListItemIcon>
-              Agregar
+              Inicio
             </MenuItem>
-            <MenuItem component={Link} to="/" onClick={handleClose}>
+            <MenuItem component={Link} to="/create" onClick={handleCloseNavMenu}>
               <ListItemIcon>
-                <Settings fontSize="small" />
+                <ArrowRight fontSize="small" />
               </ListItemIcon>
-              Listar
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={onLogout}>
-              <ListItemIcon>
-                <Logout fontSize="small" />
-              </ListItemIcon>
-              Cerrar Sesión
+              Agregar receta
             </MenuItem>
           </Menu>
+        </Box>
 
-        </Grid>
+        <Typography
+          variant="h5"
+          noWrap
+          component="a"
+          href=""
+          sx={{
+            mr: 3,
+            mb: '5px',
+            display: { xs: 'flex', md: 'none' },
+            flexGrow: 1,
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            letterSpacing: '.3rem',
+            color: 'inherit',
+            textDecoration: 'none',
+          }}
+        >
+          Recipes App
+        </Typography>
+
+        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Button component={Link} to="/" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }} >
+            Inicio
+          </Button>
+          <Button component={Link} to="/create" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }} >
+            Agregar receta
+          </Button>
+        </Box>
+
+        <Box sx={{ flexGrow: 0 }}>
+          <Chip sx={{ display: { xs: 'none', md: 'inline-flex' } }} label={<span style={{ color: '#fff' }}>Bienvenido {user.email}</span>} />
+          <Button color="error" size="small" onClick={onLogout}>
+            <ExitToAppOutlined />
+            Salir
+          </Button>
+        </Box>
+
+        {/* </Grid> */}
       </Toolbar>
     </AppBar>
   )

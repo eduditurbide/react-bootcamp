@@ -15,7 +15,7 @@ export const EmptyView = () => {
         <MenuBookOutlined sx={{ fontSize: 100, color: 'white' }} />
       </Grid>
       <Grid item xs={12}>
-        <Typography color={'white'} variant="h5">
+        <Typography color={'white'} variant="h5" textAlign={"center"} px={2}>
           Selecciona o crea una receta
         </Typography>
       </Grid>

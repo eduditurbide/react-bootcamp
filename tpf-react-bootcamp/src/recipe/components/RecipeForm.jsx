@@ -1,6 +1,6 @@
 import { Button, Grid, TextField } from "@mui/material"
 import { useForm } from "../../hooks"
-import { SaveOutlined } from "@mui/icons-material"
+import { ClearSharp, SaveOutlined } from "@mui/icons-material"
 import { IngredientForm } from "./ingredient"
 import { DeleteButton } from "./DeleteButton"
 
@@ -11,7 +11,11 @@ const initRecipeForm = {
   imagePath: "",
 }
 
-export const RecipeForm = ({recipe = null, onSubmit = null, onDelete = null}) => {
+export const RecipeForm = ({
+  recipe = null, 
+  onSubmit = null, 
+  onCancel = null,
+}) => {
 
   const { 
     formState,
@@ -25,6 +29,12 @@ export const RecipeForm = ({recipe = null, onSubmit = null, onDelete = null}) =>
   const onSaveRecipe = () => {
     if (onSubmit) {
       onSubmit(formState)
+    }
+  }
+
+  const onCancelRecipe = (e) => { 
+    if (onCancel) {
+      onCancel(e)
     }
   }
 
@@ -55,7 +65,15 @@ export const RecipeForm = ({recipe = null, onSubmit = null, onDelete = null}) =>
           onChange={onInputChange}
         />
 
-        {imagePath && ( <img alt="Imagen de receta." src={imagePath} style={{ height: '200px', width: 'auto', mb: 3 }}/> )}
+        {imagePath && ( 
+          <Grid item xs={12} sm={6}>
+            <img 
+              alt="Imagen de receta." 
+              src={imagePath} 
+              style={{ height: '100%', width: '100%', objectFit: 'cover' }}
+            /> 
+          </Grid>
+        )}
 
         <TextField
           type="text"
@@ -74,23 +92,26 @@ export const RecipeForm = ({recipe = null, onSubmit = null, onDelete = null}) =>
       
         <Grid item xs={12}>
           <Grid container alignItems={"center"} justifyContent={"center"} gap={2}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              sx={{ padding: 1, pr: 2, width: { xs: '100%', sm: 'auto' } }}
+              onClick={onCancelRecipe}
+            >
+              <ClearSharp sx={{ fontSize: 30, mr: 1 }} />
+              Cancelar y salir
+            </Button>
+
             <Button 
               variant="contained" 
               color="primary" 
-              sx={{ padding: 1, width: { xs: '100%', sm: 'auto' } }} 
+              sx={{ p: 1, pr: 2, width: { xs: '100%', sm: 'auto' } }} 
               onClick={onSaveRecipe}
             >
               <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
               Guardar
             </Button>
 
-            {recipe?._id && (
-              <DeleteButton
-                title="Eliminar receta"
-                text={`Estas por eliminar la receta "${recipe.name}", ¿Deseas continuar?`}
-                onAgreeClickEvent={e => onDelete ? onDelete(formState) : null}
-              />
-            )}
           </Grid>
         </Grid>
 

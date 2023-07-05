@@ -1,7 +1,7 @@
 import { Navigate, useNavigate, useParams } from "react-router-dom"
-import { Alert, Backdrop, CircularProgress, Grid, Typography } from "@mui/material"
+import { Alert, Backdrop, Box, CircularProgress, Grid, Typography } from "@mui/material"
 import { useRecipes } from "../hooks/useRecipes"
-import { RecipeForm } from "../components"
+import { DeleteButton, RecipeForm } from "../components"
 import { useEffect, useState } from "react"
 
 export const EditRecipePage = () => {
@@ -51,8 +51,19 @@ export const EditRecipePage = () => {
   return (
     <>
       <Grid container sx={{ mb: 1 }}>
-        <Grid item>
-          <Typography variant="h4" component="h1" gutterBottom>Edición de receta</Typography>
+        <Grid container>
+          <Grid item xs={12} sm={10} >
+            <Typography variant="h4" component="h1" gutterBottom>Edición de receta</Typography>
+          </Grid>
+          <Grid item xs={12} sm={2} >
+            {recipe?._id && (
+              <DeleteButton
+                title="Eliminar receta"
+                text={`Estas por eliminar la receta "${recipe.name}", ¿Deseas continuar?`}
+                onAgreeClickEvent={ e => onDeleteRecipe(formState) }
+              />
+            )}
+          </Grid>
         </Grid>
         
         {(hasError && errorMessage) && (
@@ -76,7 +87,7 @@ export const EditRecipePage = () => {
         )}
 
         {recipe && (
-          <RecipeForm recipe={recipe} onSubmit={onSaveRecipe} onDelete={onDeleteRecipe}/>
+          <RecipeForm recipe={recipe} onSubmit={onSaveRecipe} onCancel={ e => navigate('/', { replace: true }) }/>
         )}
       </Grid>
       <Backdrop
