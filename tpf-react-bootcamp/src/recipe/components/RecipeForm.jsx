@@ -2,7 +2,6 @@ import { Button, Grid, TextField } from "@mui/material"
 import { useForm } from "../../hooks"
 import { ClearSharp, SaveOutlined } from "@mui/icons-material"
 import { IngredientForm } from "./ingredient"
-import { DeleteButton } from "./DeleteButton"
 
 const initRecipeForm = {
   name: "",

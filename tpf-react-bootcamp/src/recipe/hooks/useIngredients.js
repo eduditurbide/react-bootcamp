@@ -1,6 +1,6 @@
 import { useReducer } from "react"
 import { ingredientReducer } from "../context"
-import { type } from "../context/ingredientActions"
+import { ingredientType } from "../context/ingredientActions"
 
 export const useIngredients = (ingredientList = [] ) => {
 
@@ -8,14 +8,14 @@ export const useIngredients = (ingredientList = [] ) => {
 
   const handleNewIngredient = (ingredient) => {
     dispatch({
-      type: type.add,
+      type: ingredientType.add,
       payload: ingredient
     })
   }
 
   const handleDeleteIngredient = (id) => {
     dispatch({
-      type: type.remove,
+      type: ingredientType.remove,
       payload: id
     })
   }

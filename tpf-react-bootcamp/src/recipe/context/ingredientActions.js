@@ -1,4 +1,4 @@
-export const type = {
+export const ingredientType = {
   add: '[TODO] Add Ingredient',
   remove: '[TODO] Remove Ingredient',
 }

@@ -1,6 +1,9 @@
+import { getEnvironments } from "../../helpers/getEnvironments";
 
 export const getFetchRegister = async ({ email = "", password = "" }) => {
-  const signupUrl = import.meta.env.VITE_APP_RECIPE_URL_API + 'auth/signup'
+  const env = getEnvironments()
+  // const signupUrl = import.meta.env.VITE_APP_RECIPE_URL_API + 'auth/signup'
+  const signupUrl = env.VITE_APP_RECIPE_URL_API + 'auth/signup'
 
   const resp = await fetch(signupUrl, {
     method: 'POST',

@@ -29,8 +29,7 @@ export const Navbar = () => {
   return (
     <AppBar position="fixed">
       <Toolbar>
-        {/* <Grid container direction={'row'} justifyContent={'space-between'} alignItems={"center"}> */}
-
+        
         <Typography
           variant="h6"
           noWrap
@@ -51,7 +50,6 @@ export const Navbar = () => {
         </Typography>
 
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-          {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}> */}
           <IconButton
             size="large"
             aria-label="account of current user"
@@ -133,7 +131,6 @@ export const Navbar = () => {
           </Button>
         </Box>
 
-        {/* </Grid> */}
       </Toolbar>
     </AppBar>
   )

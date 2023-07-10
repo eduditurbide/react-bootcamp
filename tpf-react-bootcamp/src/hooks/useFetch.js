@@ -12,7 +12,7 @@ export const useFetch = ({url, methodType = 'GET', jsonBody = null}) => {
 
     setState({...state, isLoading: true})
 
-    const options = {
+    let options = {
       method: methodType,
       headers: { 'Content-Type': 'application/json' },
     }
